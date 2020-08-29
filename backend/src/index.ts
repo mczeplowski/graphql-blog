@@ -5,13 +5,15 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { HelloResolver } from "./resolvers/hello";
+import { PostsResolver } from "./resolvers/posts";
 
 createConnection()
   .then(async (connection) => {
     const app = express();
 
     const apolloServer = new ApolloServer({
-      schema: await buildSchema({ resolvers: [HelloResolver] }),
+      schema: await buildSchema({ resolvers: [HelloResolver, PostsResolver] }),
+      context: { connection },
     });
 
     const posts = await connection.manager.find(Post);
