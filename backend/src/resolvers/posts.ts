@@ -1,4 +1,4 @@
-import { Resolver, Query, Ctx, Arg, Int, Mutation } from "type-graphql";
+import { Resolver, Query, Ctx, Arg, Mutation } from "type-graphql";
 import { Post } from "../entity/Post";
 import { ResolverContext } from "../types";
 
@@ -23,8 +23,9 @@ export class PostsResolver {
     @Arg("content") content: string,
     @Ctx() { connection }: ResolverContext
   ): Promise<Post> {
-    const post = await connection.manager.create(Post, { title, content });
+    const post = connection.manager.create(Post, { title, content });
     await connection.manager.save(post);
+
     return post;
   }
 

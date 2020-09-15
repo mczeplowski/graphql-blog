@@ -8,3 +8,8 @@ services:
     environment:
       POSTGRES_PASSWORD: test
       POSTGRES_USER: test
+  redis:
+    image: redis:6-alpine
+    restart: always
+    ports:
+      - 6379:6379
